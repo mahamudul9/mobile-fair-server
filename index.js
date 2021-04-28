@@ -5,12 +5,12 @@ require('dotenv').config()
 
 const ObjectID=require('mongodb').ObjectID;
 const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ywjyr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://mobileUser:1Mobile1Fair@cluster0.ywjyr.mongodb.net/mobileFairDB?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 client.connect(err => {
-  const productCollection = client.db(process.env.DB_NAME).collection(process.env.DB_COLLECT);
-  const userCollection =client.db(process.env.DB_NAME).collection(process.env.USER_COLLECT);
+  const productCollection = client.db("mobileFairDB").collection("mobiles");
+  const userCollection =client.db("mobileFairDB").collection("users");
 
   app.post('/addProduct', (req, res) => {
     const newData = req.body;
