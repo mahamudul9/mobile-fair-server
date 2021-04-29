@@ -12,6 +12,10 @@ client.connect(err => {
   const productCollection = client.db("mobileFairDB").collection("mobiles");
   const userCollection =client.db("mobileFairDB").collection("users");
 
+  app.get('/', (req, res) => {
+    res.send('Mobile Fair')
+  })
+
   app.post('/addProduct', (req, res) => {
     const newData = req.body;
     console.log("adding  new product: ",newData);
@@ -21,7 +25,7 @@ client.connect(err => {
   })
 
   app.get('/products', (req, res) => {
-    productCollection.find()
+    productCollection.find({})
     .toArray((err, items)=>{
       res.send(items);
     })
@@ -35,7 +39,7 @@ client.connect(err => {
   })
 
   app.get('/orders', (req, res) => {
-    userCollection.find()
+    userCollection.find({})
     .toArray((err, items)=>{
       res.send(items);
     })
@@ -52,16 +56,6 @@ client.connect(err => {
 });
 
 
-app.get('/', (req, res) => {
-    res.send('Mobile Fair')
-  })
-
-
-app.use(function( req, res, next){
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-}); 
 const port= process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
