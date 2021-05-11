@@ -12,7 +12,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 client.connect(err => {
   const productCollection = client.db("mobileFairDB").collection("mobiles");
-  const userCollection =client.db("mobileFairDB").collection("users");
+  const userCollection = client.db("mobileFairDB").collection("users");
+  const adminCollection = client.db("mobileFairDB").collection("admins");
 
   app.get('/', (req, res) => {
     res.send('Mobile Fair')
@@ -52,6 +53,13 @@ client.connect(err => {
     console.log("deleting item ",id);
     productCollection.findOneAndDelete({_id: id})
     .then(document=> res.send(document))
+  })
+
+  app.get('/admins', (req, res)=> {
+    adminCollection.find({})
+    .toArray((err, items)=>{
+      res.send(items);
+    })
   })
   
   console.log("you got error: ",err) 
